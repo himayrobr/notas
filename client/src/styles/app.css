@@ -1,0 +1,98 @@
+/* Reset de estilos básicos para asegurar consistencia */
+@import './variables.css';
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Estilos generales de la app */
+.App {
+  font-family: 'Arial', sans-serif;
+  background-color: var(--background-2);
+  min-height: 100vh;
+  padding: 10px;
+}
+
+/* Estilos para el contenedor principal */
+.container {
+  max-width: 400px;
+  margin: 0 auto;
+  background-color: white;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Encabezados */
+h1, h2, h3 {
+  color: #333;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+/* Botones */
+button {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  background-color: #6200ea;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #3700b3;
+}
+
+/* Estilos de formularios */
+input, textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+/* Responsividad */
+@media (max-width: 480px) {
+  .container {
+      padding: 10px;
+  }
+
+  button {
+      font-size: 14px;
+  }
+
+  input, textarea {
+      font-size: 14px;
+  }
+}
+
+/* Navegación */
+.navbar {
+  background-color: #6200ea;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.navbar a:hover {
+  background-color: #3700b3;
+  border-radius: 5px;
+}
+

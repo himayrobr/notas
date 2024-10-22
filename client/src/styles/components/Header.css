@@ -1,0 +1,33 @@
+@import '../variables.css';
+
+.contenedor {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 20px;
+}
+
+.contenedor h4 {
+    font-size: 2rem;
+    color: var(--color-1);
+}
+
+.contenedor2 {
+    display: flex;
+    gap: 20px;
+}
+
+.img-wrapper {
+    background-color: var(--button-1); /* Fondo del contenedor de la imagen */
+    padding: 15px; /* Espacio entre la imagen y el borde del contenedor */
+    border-radius: 20px; /* Esquinas redondeadas del fondo */
+    border: 2px solid var(--color-3); /* Borde alrededor del fondo */
+    display: inline-block; /* Asegura que el tamaño del contenedor se ajuste a la imagen */
+}
+
+.opcion {
+    display: block;
+    width: 100%; /* Ajusta el tamaño al 100% del contenedor */
+    border-radius: 15px; /* Redondea solo las esquinas de la imagen */
+}
