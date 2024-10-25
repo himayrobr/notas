@@ -2,15 +2,17 @@ const express = require("express")
 const noteRouters = require('./server/routers/noteRouters')
 const userRouters = require('./server/routers/userRouters')
 const error = require("./midldleware/errorHandler")
+const session = require("./middleware/sessionConfig")
 
 const https = require("https")
 const fs = require("fs")
 
 const privateKey = fs.readFileSync('./private.key');
 const certificate = fs.readFileSync('./certificate.crt');
-const app = expres();
+const app = express();
 
 app.use(express.json());
+app.use(session)
 app.use(error.jsonParseErrorHandler);
 
 app.use("/users", userRouters);

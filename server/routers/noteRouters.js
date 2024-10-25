@@ -1,15 +1,20 @@
 const router  =  require("express").Router({ mergeParams: true});
 
 
-router.get("/search", (req, res) => {
+router.get("/search", 
+    (req, res) => {
     res.status(200).json({
         message: "Buscar Notas"
     });
-}), (req, res) => {
+}, (req, res) => {
     res.status(200).json({
         message: "buscar notas"
-    })
-}
+    });
+}, (req, res) => {
+    res.status(200).json({
+        message: "buscar notas"
+    });
+});
 router.get("/:id/history", (req, res) => {
     res.status(200).json({
         message: "Obtener Historial de Cambios de Nota"
