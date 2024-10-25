@@ -1,27 +1,29 @@
 const router  =  require("express").Router();
 
-router.get("/", async (req, res) => {
-    res.status(200).json({
-        message: "Crear Usuario"
-    });
-});
-router.get("/login", async (req, res) => {
+
+router.post("/login", async (req, res) => {
     res.status(200).json({
         message: "Iniciar Sesion"
     });
 });
-router.get("/logout", async (req, res) => {
+router.post("/", async (req, res) => {
+    res.status(200).json({
+        message: "Crear Usuario"
+    });
+});
+
+router.post("/logout", async (req, res) => {
     res.status(200).json({
         message: "cerrar sesion"
     });
 });
 
-router.get("/", async (req, res) => {
+router.put("/:id", async (req, res) => {
     res.status(200).json({
-        message: "Crear Usuario"
+        message: "actualizar usuario"
     });
 });
-router.get("/", async (req, res) => {
+router.delete("/:id", async (req, res) => {
     res.status(200).json({
         message: "Crear Usuario"
     });

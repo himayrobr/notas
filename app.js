@@ -1,5 +1,6 @@
 const express = require("express")
 const noteRouters = require('./server/routers/noteRouters')
+const userRouters = require('./server/routers/userRouters')
 const error = require("./midldleware/errorHandler")
 
 const https = require("https")
@@ -12,6 +13,7 @@ const app = expres();
 app.use(express.json());
 app.use(error.jsonParseErrorHandler);
 
+app.use("/users", userRouters);
 app.use("/notes", noteRouters);
 
 
