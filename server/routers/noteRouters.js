@@ -1,69 +1,13 @@
-const router  =  require("express").Router({ mergeParams: true});
+const router = require("express").Router();
+const noteController = require("../controllers/noteController");
 
-
-router.get("/search", 
-    (req, res) => {
-    res.status(200).json({
-        message: "Buscar Notas"
-    });
-}, (req, res) => {
-    res.status(200).json({
-        message: "buscar notas"
-    });
-}, (req, res) => {
-    res.status(200).json({
-        message: "buscar notas"
-    });
-});
-router.get("/:id/history", (req, res) => {
-    res.status(200).json({
-        message: "Obtener Historial de Cambios de Nota"
-    })
-});
-router.get("/:id", "1.0.0" (req, res, ) => {
-    res.status(200),json({
-        message: "Obtener Nota Especifica id"
-    });
-});
-router.get("/:name", "1.1.0" (req, res, ) => {
-    res.status(200),json({
-        message: "Obtener Nota Especifica por nombre"
-    });
-});
-router.get("/:name", "1.1.1" (req, res, ) => {
-    res.status(200),json({
-        message: "Obtener Nota Especifica por nombre"
-    });
-});
-router.get("/:history", "1.2.0" (req, res, ) => {
-    res.status(200),json({
-        message: "Obtener Nota Especifica historiaL"
-    });
-});
-router.get("/", (req, res) => {
-    res.status(200).json({
-        message: "Obtener Todas Las Notas"
-    })
-});
-router.post("/:id/history", (req, res) => {
-    res.status(200).json({
-        message: "crear nueva Nota"
-    })
-});
-router.post("/", (req, res) => {
-    res.status(200).json({
-        message: "crear nueva Nota"
-    })
-});
-router.put("/:id", (req, res) => {
-    res.status(200).json({
-        message: "Actualizar Nota"
-    })
-});
-router.delete("/:id", (req, res) => {
-    res.status(200).json({
-        message: "Eliminar Nota"
-    })
-});
+router.get("/", noteController.findAllNotes); // Obtener todas las notas
+router.get("/:id", noteController.findNoteById); // Obtener nota específica por ID
+router.get("/search", noteController.findNotesMatchingTitleOrDescription); // Buscar notas por título o contenido
+router.get("/:id/history", noteController.getNoteHistory); // Obtener historial de cambios de una nota
+router.post("/", noteController.createNote); // Crear nueva nota
+router.post("/:id/history", noteController.updateHistoryNoteById); // Crear historial de una nota
+router.put("/:id", noteController.updateNoteById); // Actualizar una nota
+router.delete("/:id", noteController.deleteNoteById); // Eliminar una nota
 
 module.exports = router;
