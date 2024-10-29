@@ -1,0 +1,16 @@
+@import './variables.css';
+
+.cuerpo{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: blue;
+    padding: 0 0 150px 0;
+}
+
+.cruz{
+    height: 50px;
+    width: 50px;
+    display: flex;
+    align-items: flex-end;
+} 
