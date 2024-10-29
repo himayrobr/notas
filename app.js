@@ -1,11 +1,13 @@
 const express = require("express");
 const https = require("https");
 const fs = require("fs");
+const connect = require('./server/helpers/connect');
 const noteRouters = require('./server/routers/noteRouters');
 const userRouters = require('./server/routers/userRouters');
 const error = require("./server/middleware/errorHandler");
 const session = require("./server/middleware/sessionConfig");
 const noteLimit = require('./server/middleware/noteLimit');
+require('dotenv').config(); // Para leer las variables del archivo .env
 
 // Leer las claves y certificados SSL
 const privateKey = fs.readFileSync('./private.key', 'utf8');
@@ -33,6 +35,9 @@ app.use("/users", userRouters);
 app.post("/", (req, res) => {
   res.status(200).json(req.body);
 });
+
+// Conexión a MongoDB usando el archivo connect.js
+connect();
 
 // Configuración del servidor HTTPS
 const options = {
