@@ -1,6 +1,4 @@
 const express = require("express");
-const https = require("https");
-const fs = require("fs");
 const connect = require('./server/helpers/connect');
 const noteRouters = require('./server/routers/noteRouters');
 const userRouters = require('./server/routers/userRouters');
@@ -9,6 +7,8 @@ const session = require("./server/middleware/sessionConfig");
 const noteLimit = require('./server/middleware/noteLimit');
 require('dotenv').config(); // Para leer las variables del archivo .env
 
+const https = require("https");
+const fs = require("fs");
 // Leer las claves y certificados SSL
 const privateKey = fs.readFileSync('./private.key', 'utf8');
 const certificate = fs.readFileSync('./certificate.crt', 'utf8');
