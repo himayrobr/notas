@@ -11,6 +11,7 @@ exports.addNewUser = async (req, res) => {
 
         // Crea un nuevo usuario en la base de datos
         const resultPOST = await userModel.createUser(req.body);
+        console.log(req.body)
 
         // Respuesta de éxito
         res.status(201).json({
