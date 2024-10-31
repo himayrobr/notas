@@ -1,17 +1,18 @@
-// src/components/Login.tsx
 import React, { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom'; // Importar useNavigate
 import { AuthContext } from '../AuthContext';
+import { endpoints } from '../apiConfig';
 
 const Login: React.FC = () => {
   const { login } = useContext(AuthContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate(); // Usar useNavigate para redireccionar
 
   const handleEmailLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Lógica para iniciar sesión con email y contraseña
     try {
-      const response = await fetch('/api/users/login', {
+      const response = await fetch(endpoints.login, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
@@ -19,17 +20,13 @@ const Login: React.FC = () => {
       const data = await response.json();
       if (response.ok) {
         login(data.token);
+        navigate('/notes'); // Redirigir a la página de notas
       } else {
         alert(data.message || 'Error al iniciar sesión');
       }
     } catch (error) {
       console.error('Error al iniciar sesión:', error);
     }
-  };
-
-  const handleSocialLogin = (provider: string) => {
-    // Redireccionar al backend para autenticación social
-    window.location.href = `/auth/${provider}`;
   };
 
   return (
@@ -56,10 +53,6 @@ const Login: React.FC = () => {
         </div>
         <button type="submit">Ingresar</button>
       </form>
-      <h3>O ingresa con:</h3>
-      <button onClick={() => handleSocialLogin('google')}>Google</button>
-      <button onClick={() => handleSocialLogin('facebook')}>Facebook</button>
-      <button onClick={() => handleSocialLogin('discord')}>Discord</button>
     </div>
   );
 };

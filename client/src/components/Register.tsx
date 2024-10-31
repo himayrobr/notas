@@ -1,5 +1,5 @@
-// src/components/Register.tsx
 import React, { useState } from 'react';
+import { endpoints } from '../apiConfig';
 
 const Register: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -8,22 +8,21 @@ const Register: React.FC = () => {
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Validar que las contraseñas coincidan
     if (password !== confirmPassword) {
       alert('Las contraseñas no coinciden');
       return;
     }
-    // Lógica para registrar un nuevo usuario
+
     try {
-      const response = await fetch('/api/users/register', {
+      const response = await fetch(endpoints.register, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
       });
+
       const data = await response.json();
       if (response.ok) {
         alert('Registro exitoso. Ahora puedes iniciar sesión.');
-        // Redireccionar al usuario a la página de inicio de sesión
         window.location.href = '/login';
       } else {
         alert(data.message || 'Error al registrarse');

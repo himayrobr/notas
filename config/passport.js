@@ -3,7 +3,7 @@ const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
 const DiscordStrategy = require('passport-discord').Strategy;
-const User = require('../server/models/User'); // Asegúrate de que la ruta es correcta
+const User = require('../server/models/userModel'); // Asegúrate de que la ruta es correcta
 
 // Serialización y deserialización del usuario
 passport.serializeUser((user, done) => {
@@ -23,23 +23,11 @@ passport.deserializeUser(async (id, done) => {
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,
   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-  callbackURL: "/auth/google/callback"
-}, async (accessToken, refreshToken, profile, done) => {
-  try {
-    let user = await User.findOne({ providerId: profile.id, provider: 'google' });
-    if (!user) {
-      user = new User({
-        provider: 'google',
-        providerId: profile.id,
-        name: profile.displayName,
-        email: profile.emails[0].value
-      });
-      await user.save();
-    }
-    done(null, user);
-  } catch (err) {
-    done(err, null);
-  }
+  callbackURL: "http://localhost:5000/auth/google/callback"  // Ajusta la URL según tu configuración
+},
+function(accessToken, refreshToken, profile, done) {
+  // Lógica de usuario
+  return done(null, profile);
 }));
 
 // Estrategia de Facebook

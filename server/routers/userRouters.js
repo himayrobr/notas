@@ -1,31 +1,12 @@
-const router  =  require("express").Router();
+// server/routers/userRouters.js
+const router = require('express').Router();
+const userController = require('../controllers/userController');
 
+router.post('/login', userController.loginUser);
+router.post('/register', userController.addNewUser);
+router.post('/logout', userController.logoutUser);
 
-router.post("/login", async (req, res) => {
-    res.status(200).json({
-        message: "Iniciar Sesion"
-    });
-});
-router.post("/", async (req, res) => {
-    res.status(200).json({
-        message: "Crear Usuario"
-    });
-});
+router.put('/:id', userController.updateUser); 
+router.delete('/:id', userController.deleteUser);
 
-router.post("/logout", async (req, res) => {
-    res.status(200).json({
-        message: "cerrar sesion"
-    });
-});
-
-router.put("/:id", async (req, res) => {
-    res.status(200).json({
-        message: "actualizar usuario"
-    });
-});
-router.delete("/:id", async (req, res) => {
-    res.status(200).json({
-        message: "Crear Usuario"
-    });
-});
 module.exports = router;
