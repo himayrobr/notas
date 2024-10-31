@@ -1,17 +1,17 @@
+// app.js
 const express = require("express");
+const path = require("path");
+require('dotenv').config(); // Para leer las variables del archivo .env
+
 const connect = require('./server/helpers/connect');
 const noteRouters = require('./server/routers/noteRouters');
 const userRouters = require('./server/routers/userRouters');
 const error = require("./server/middleware/errorHandler");
 const session = require("./server/middleware/sessionConfig");
 const noteLimit = require('./server/middleware/noteLimit');
-require('dotenv').config(); // Para leer las variables del archivo .env
 
-const https = require("https");
-const fs = require("fs");
-// Leer las claves y certificados SSL
-const privateKey = fs.readFileSync('./private.key', 'utf8');
-const certificate = fs.readFileSync('./certificate.crt', 'utf8');
+// Conectar a MongoDB
+connect();
 
 // Crear instancia de Express
 const app = express();
@@ -26,36 +26,27 @@ app.use(session);
 app.use(error.jsonParseErrorHandler);
 
 // Middleware de limitación de peticiones, aplicado a las rutas de notas
-app.use("/notes", noteLimit, noteRouters);
+app.use("/api/notes", noteLimit, noteRouters);
 
 // Rutas de usuarios
-app.use("/users", userRouters);
+app.use("/api/users", userRouters);
 
-// Ruta de prueba
-app.post("/", (req, res) => {
-  res.status(200).json(req.body);
-});
+// Servir archivos estáticos del frontend en producción
+if (process.env.NODE_ENV === 'production') {
+  // Establecer carpeta estática
+  app.use(express.static(path.join(__dirname, 'dist', 'client')));
 
-// Conexión a MongoDB usando el archivo connect.js
-connect();
+  // Servir la aplicación de React para cualquier ruta no especificada
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'dist', 'client', 'index.html'));
+  });
+} 
 
-// Configuración del servidor HTTPS
-const options = {
-  key: privateKey,
-  cert: certificate,
-  passphrase: 'serganimon'
-};
+// Puerto y host
+const PORT = process.env.EXPRESS_PORT || 5000;
+const HOST = process.env.EXPRESS_HOST_NAME || 'localhost';
 
-const config = {
-  host: process.env.EXPRESS_HOST_NAME || 'localhost',
-  port: process.env.EXPRESS_PORT || 5000
-};
-
-console.log(`Host: ${config.host}, Port: ${config.port}`);
-
-const httpsServer = https.createServer(options, app);
-
-// Iniciar el servidor HTTPS
-httpsServer.listen(config.port, config.host, () => {
-  console.log(`Servidor HTTPS corriendo en https://${config.host}:${config.port}`);
+// Iniciar el servidor HTTP
+app.listen(PORT, HOST, () => {
+  console.log(`🚀 Servidor corriendo en http://${HOST}:${PORT}`);
 });
