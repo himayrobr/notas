@@ -4,11 +4,13 @@ exports.findAllNotes = async (req, res) => {
   try {
     const note = new Note();
     const result = await note.getAllNotes(req.user._id); // Usar el id del usuario autenticado
-    return res.status(result.status).json(result);
+    return res.status(result.status).json(result.data); // Devolver solo los datos
   } catch (error) {
     return res.status(500).json({ message: "Error al obtener notas", error });
   }
 };
+
+
 
 exports.findNoteById = async (req, res) => {
   try {
@@ -42,6 +44,7 @@ exports.getNoteHistory = async (req, res) => {
   }
 };
 
+
 exports.createNote = async (req, res) => {
   try {
     const note = new Note();
@@ -51,7 +54,6 @@ exports.createNote = async (req, res) => {
     return res.status(500).json({ message: 'Error al crear la nota', error });
   }
 };
-
 
 exports.updateNoteById = async (req, res) => {
   try {
@@ -63,6 +65,7 @@ exports.updateNoteById = async (req, res) => {
   }
 };
 
+
 exports.deleteNoteById = async (req, res) => {
   try {
     const note = new Note();
@@ -72,6 +75,7 @@ exports.deleteNoteById = async (req, res) => {
     return res.status(500).json({ message: "Error al eliminar la nota", error });
   }
 };
+
 
 exports.updateHistoryNoteById = async (req, res) => {
   try {

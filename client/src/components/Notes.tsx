@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../AuthContext';
 import { endpoints } from '../apiConfig';
 
@@ -10,41 +11,54 @@ type Note = {
 };
 
 const Notes: React.FC = () => {
-  const { authToken } = useContext(AuthContext);
+  const { authToken, logout } = useContext(AuthContext);
+  const navigate = useNavigate();
   const [notes, setNotes] = useState<Note[]>([]);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
 
   useEffect(() => {
     const fetchNotes = async () => {
+      const token = localStorage.getItem('token'); // Obtener el token desde localStorage
+      if (!token) {
+        navigate('/login'); // Redirigir al inicio de sesión si no hay token
+        return;
+      }
       try {
         const response = await fetch(endpoints.notes, {
           headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${authToken}`,
+            Authorization: `Bearer ${token}`,
           },
         });
         const data = await response.json();
-        if (response.ok) {
+        if (response.ok && Array.isArray(data)) {
           setNotes(data);
         } else {
           console.error('Error al obtener las notas:', data.message);
+          if (data.message === 'Unauthorized') {
+            logout();
+            navigate('/login');
+          }
         }
       } catch (error) {
         console.error('Error al obtener las notas:', error);
+        logout();
+        navigate('/login');
       }
     };
     fetchNotes();
-  }, [authToken]);
+  }, [navigate, logout]);
 
   const handleAddNote = async () => {
-    if (!title || !content) return;
+    const token = localStorage.getItem('token'); // Obtener el token desde localStorage
+    if (!token || !title || !content) return;
     try {
       const response = await fetch(endpoints.notes, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${authToken}`,
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ title, content, color: getRandomColor() }),
       });
@@ -62,11 +76,13 @@ const Notes: React.FC = () => {
   };
 
   const handleDeleteNote = async (id: string) => {
+    const token = localStorage.getItem('token'); // Obtener el token desde localStorage
+    if (!token) return;
     try {
       const response = await fetch(`${endpoints.notes}/${id}`, {
         method: 'DELETE',
         headers: {
-          Authorization: `Bearer ${authToken}`,
+          Authorization: `Bearer ${token}`,
         },
       });
       if (response.ok) {
@@ -103,7 +119,7 @@ const Notes: React.FC = () => {
       </div>
       <div>
         {notes.map((note) => (
-          <div key={note._id} style={{ backgroundColor: note.color }}>
+          <div key={note._id} style={{ backgroundColor: note.color }}> {/* Asegúrate de que la key sea única */}
             <h3>{note.title}</h3>
             <p>{note.content}</p>
             <button onClick={() => handleDeleteNote(note._id)}>Eliminar</button>

@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema({
 });
 
 userSchema.methods.generateJwt = function() {
-  return jwt.sign({ id: this._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+  return jwt.sign({ id: this._id }, process.env.JWT_SECRET, { expiresIn: '10m' });
 };
 
 module.exports = mongoose.model('User', userSchema);

@@ -8,7 +8,7 @@ const authRouters = require('./server/routers/authRouters');
 const error = require("./server/middleware/errorHandler");
 const session = require("./server/middleware/sessionConfig");
 const noteLimit = require('./server/middleware/noteLimit');
-const passport = require('./config/passport'); 
+const passport = require('./server/config/passport'); // Importa passport
 const cors = require('cors'); 
 
 connect();
@@ -18,7 +18,7 @@ const app = express();
 app.use(express.json());
 app.use(cors()); 
 app.use(session);
-app.use(passport.initialize());
+app.use(passport.initialize()); // Inicializa passport
 app.use(passport.session());
 
 app.use(error.jsonParseErrorHandler);

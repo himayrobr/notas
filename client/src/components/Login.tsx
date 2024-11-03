@@ -19,6 +19,7 @@ const Login: React.FC = () => {
       });
       const data = await response.json();
       if (response.ok) {
+        localStorage.setItem('token', data.token); // Guarda el token en localStorage
         login(data.token);
         navigate('/notes'); // Redirigir a la página de notas
       } else {
@@ -28,7 +29,7 @@ const Login: React.FC = () => {
       console.error('Error al iniciar sesión:', error);
     }
   };
-
+  
   return (
     <div>
       <h2>Iniciar Sesión</h2>
