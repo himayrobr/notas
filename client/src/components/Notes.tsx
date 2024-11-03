@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../AuthContext';
 import { endpoints } from '../apiConfig';
+import '../styles/HomeScreen.css'; // Importar el archivo CSS
 
 type Note = {
   _id: string;
@@ -101,7 +102,7 @@ const Notes: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className="container">
       <h2>Tus Notas</h2>
       <div>
         <input
@@ -117,9 +118,9 @@ const Notes: React.FC = () => {
         ></textarea>
         <button onClick={handleAddNote}>Agregar Nota</button>
       </div>
-      <div>
+      <div className="notes-container">
         {notes.map((note) => (
-          <div key={note._id} style={{ backgroundColor: note.color }}> {/* Asegúrate de que la key sea única */}
+          <div key={note._id} className="note-card" style={{ backgroundColor: note.color }}> {/* Asegúrate de que la key sea única */}
             <h3>{note.title}</h3>
             <p>{note.content}</p>
             <button onClick={() => handleDeleteNote(note._id)}>Eliminar</button>

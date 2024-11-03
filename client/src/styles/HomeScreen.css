@@ -1,16 +1,80 @@
 @import './variables.css';
 
-.cuerpo{
+/* Estilos para la aplicación de notas */
+body {
+    background-color: #333;
+    color: #fff;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .container {
+    width: 80%;
+    margin: auto;
+    padding: 20px;
+    text-align: center;
+    background: #ff1a1a;
+  }
+  
+  h2 {
+    margin-bottom: 20px;
+  }
+  
+  input, textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: none;
+    background-color: #444;
+    color: #fff;
+  }
+  
+  button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #1e90ff;
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #1c86ee;
+  }
+  
+  .notes-container {
     display: flex;
+    /* flex-wrap: wrap; */
     flex-direction: column;
     justify-content: space-between;
-    background-color: blue;
-    padding: 0 0 150px 0;
-}
-
-.cruz{
-    height: 50px;
-    width: 50px;
-    display: flex;
-    align-items: flex-end;
-} 
+    background: #1e90ff;
+  }
+  
+  .note-card {
+    background-color: #fff;
+    color: #333;
+    width: 30%;
+    margin: 10px;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  }
+  
+  .note-card h3 {
+    margin-top: 0;
+  }
+  
+  .note-card p {
+    margin: 10px 0;
+  }
+  
+  .note-card button {
+    background-color: #ff4d4d;
+  }
+  
+  .note-card button:hover {
+    background-color: #ff1a1a;
+  }
+  
