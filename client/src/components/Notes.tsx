@@ -2,7 +2,9 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../AuthContext';
 import { endpoints } from '../apiConfig';
-import '../styles/HomeScreen.css'; // Importar el archivo CSS
+import '../styles/HomeScreen.css'; 
+import addIcon from '../assets/imagenes/add.png'; 
+import Header from './Header'
 
 type Note = {
   _id: string;
@@ -17,6 +19,7 @@ const Notes: React.FC = () => {
   const [notes, setNotes] = useState<Note[]>([]);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const fetchNotes = async () => {
@@ -68,6 +71,7 @@ const Notes: React.FC = () => {
         setNotes([...notes, newNote]);
         setTitle('');
         setContent('');
+        setShowModal(false); // Cerrar el modal
       } else {
         console.error('Error al crear la nota:', newNote.message);
       }
@@ -103,21 +107,27 @@ const Notes: React.FC = () => {
 
   return (
     <div className="container">
+      <Header/>
       <h2>Tus Notas</h2>
-      <div>
-        <input
-          type="text"
-          placeholder="Título de la nota"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-        <textarea
-          placeholder="Contenido de la nota"
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-        ></textarea>
-        <button onClick={handleAddNote}>Agregar Nota</button>
-      </div>
+    
+      {showModal && (
+        <div className="add-note-modal">
+          <h3>Agregar Nueva Nota</h3>
+          <input
+            type="text"
+            placeholder="Título de la nota"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
+          <textarea
+            placeholder="Contenido de la nota"
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+          ></textarea>
+          <button onClick={handleAddNote}>Agregar Nota</button>
+          <button onClick={() => setShowModal(false)}>Cancelar</button>
+        </div>
+      )}
       <div className="notes-container">
         {notes.map((note) => (
           <div key={note._id} className="note-card" style={{ backgroundColor: note.color }}> {/* Asegúrate de que la key sea única */}
@@ -127,6 +137,12 @@ const Notes: React.FC = () => {
           </div>
         ))}
       </div>
+      <img
+        src={addIcon}
+        alt="Agregar Nota"
+        className="add-note-icon"
+        onClick={() => setShowModal(true)}
+      />
     </div>
   );
 };
