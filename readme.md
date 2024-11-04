@@ -3,7 +3,7 @@ crear estas variables de entorno en un archivo .env
 
 EXPRESS_HOST="localhost"
 EXPRESS_PORT=5000
-MONGO_URI="mongodb://serganimon:serganimon@localhost/"
+MONGO_URI="mongodb://mongo:FSvrJuXdkQxPRMacXHEvChaDZUZCcAQy@autorack.proxy.rlwy.net:56230"
 MONGO_DB="notes"
 JWT_SECRET=your_jwt_secret
 GOOGLE_CLIENT_ID=your_google_client_id
